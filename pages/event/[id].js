@@ -16,14 +16,17 @@ function Event({ event }) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <Head>
-        <title> {event.name} | web3rsvp</title>
-        <meta name="description" content={event.description} />
+        <title> {event?.name ?? "Unnamed"} | web3rsvp</title>
+        <meta
+          name="description"
+          content={event?.description ?? "No description"}
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <section className="relative py-12">
         <h6 className="mb-2">{formatTimestamp(event.eventTimestamp)}</h6>
         <h1 className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl md:text-5xl mb-6 lg:mb-12">
-          {event.name}
+          {event?.name ?? "Unnamed"}
         </h1>
         <div className="flex flex-wrap-reverse lg:flex-nowrap">
           <div className="w-full pr-0 lg:pr-24 xl:pr-32">
@@ -32,7 +35,7 @@ function Event({ event }) {
                 <Image src={event.imageURL} alt="event image" layout="fill" />
               )}
             </div>
-            <p>{event.description}</p>
+            <p>{event?.description ?? "No description"}</p>
           </div>
           <div className="max-w-xs w-full flex flex-col gap-4 mb-6 lg:mb-0">
             <div className="flex item-center">

@@ -24,14 +24,16 @@ function Event({ event }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <section className="relative py-12">
-        <h6 className="mb-2">{formatTimestamp(event.eventTimestamp)}</h6>
+        <h6 className="mb-2">
+          {formatTimestamp(event?.eventTimestamp ?? new Date(0))}
+        </h6>
         <h1 className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl md:text-5xl mb-6 lg:mb-12">
           {event?.name ?? "Unnamed"}
         </h1>
         <div className="flex flex-wrap-reverse lg:flex-nowrap">
           <div className="w-full pr-0 lg:pr-24 xl:pr-32">
             <div className="mb-8 w-full aspect-w-10 aspect-h-7 rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-indigo-500 overflow-hidden">
-              {event.imageURL && (
+              {event?.imageURL && (
                 <Image src={event.imageURL} alt="event image" layout="fill" />
               )}
             </div>
@@ -41,7 +43,7 @@ function Event({ event }) {
             <div className="flex item-center">
               <UsersIcon className="w-6 mr-2" />
               <span className="truncate">
-                # {event.totalRSVPs}/{event.maxCapacity} attending
+                # {event?.totalRSVPs}/{event?.maxCapacity} attending
               </span>
             </div>
             <div className="flex item-center">
@@ -54,11 +56,11 @@ function Event({ event }) {
                 Hosted by{" "}
                 <a
                   className="text-indigo-800 truncate hover:underline"
-                  href={`${process.env.NEXT_PUBLIC_TESTNET_EXPLORER_URL}address/${event.eventOwner}`}
+                  href={`${process.env.NEXT_PUBLIC_TESTNET_EXPLORER_URL}address/${event?.eventOwner}`}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  {event.eventOwner}
+                  {event?.eventOwner}
                 </a>
               </span>
             </div>

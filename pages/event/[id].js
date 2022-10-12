@@ -18,7 +18,6 @@ import {
 
 function Event({ event }) {
   const { data: account } = useAccount();
-
   const [success, setSuccess] = useState(null);
   const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(null);
@@ -75,6 +74,30 @@ function Event({ event }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <section className="relative py-12">
+        {loading && (
+          <Alert
+            alertType={"loading"}
+            alertBody={"Please wait"}
+            triggerAlert={true}
+            color={"white"}
+          />
+        )}
+        {success && (
+          <Alert
+            alertType={"success"}
+            alertBody={message}
+            triggerAlert={true}
+            color={"palegreen"}
+          />
+        )}
+        {success === false && (
+          <Alert
+            alertType={"failed"}
+            alertBody={message}
+            triggerAlert={true}
+            color={"palevioletred"}
+          />
+        )}
         <h6 className="mb-2">
           {formatTimestamp(event?.eventTimestamp ?? new Date(0))}
         </h6>
@@ -91,6 +114,40 @@ function Event({ event }) {
             <p>{event?.description ?? "No description"}</p>
           </div>
           <div className="max-w-xs w-full flex flex-col gap-4 mb-6 lg:mb-0">
+            {event.eventTimestamp > currentTimestamp ? (
+              account ? (
+                checkIfAlreadyRSVPed() ? (
+                  <>
+                    <span className="w-full text-center px-6 py-3 text-base font-medium rounded-full text-teal-800 bg-teal-100">
+                      You have RSVPed! 🙌
+                    </span>
+                    <div className="flex item-center">
+                      <LinkIcon className="w-6 mr-2 text-indigo-800" />
+                      <a
+                        className="text-indigo-800 truncate hover:underline"
+                        href={event.link}
+                      >
+                        {event.link}
+                      </a>
+                    </div>
+                  </>
+                ) : (
+                  <button
+                    type="button"
+                    className="w-full items-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    onClick={newRSVP}
+                  >
+                    RSVP for {ethers.utils.formatEther(event.deposit)} MATIC
+                  </button>
+                )
+              ) : (
+                <ConnectButton />
+              )
+            ) : (
+              <span className="w-full text-center px-6 py-3 text-base font-medium rounded-full border-2 border-gray-200">
+                Event has ended
+              </span>
+            )}
             <div className="flex item-center">
               <UsersIcon className="w-6 mr-2" />
               <span className="truncate">

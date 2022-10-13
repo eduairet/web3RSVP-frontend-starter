@@ -114,7 +114,7 @@ function Event({ event }) {
             <p>{event?.description ?? "No description"}</p>
           </div>
           <div className="max-w-xs w-full flex flex-col gap-4 mb-6 lg:mb-0">
-            {event.eventTimestamp > currentTimestamp ? (
+            {event?.eventTimestamp > currentTimestamp ? (
               account ? (
                 checkIfAlreadyRSVPed() ? (
                   <>
